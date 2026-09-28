@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import 'tailwindcss';
+
+/* Neumorphism design system (see Neuphorism.md): depth from light simulation, not borders. */
+:root {
+  --neu-bg: #e6e8ed;
+  --neu-shadow-dark: #c5c8ce;
+  --neu-shadow-light: #ffffff;
+  --neu-text: #4a5568;
+  --neu-heading: #2d3748;
+  --neu-muted: #718096;
+  --neu-accent: #667eea;
+  --neu-accent-strong: #5a67d8;
+  --neu-success: #2f855a;
+  --neu-warning: #b7791f;
+  --neu-danger: #c53030;
+  --neu-info: #2b6cb0;
+
+  --neu-extruded: 8px 8px 16px var(--neu-shadow-dark), -8px -8px 16px var(--neu-shadow-light);
+  --neu-extruded-lg: 12px 12px 24px var(--neu-shadow-dark), -12px -12px 24px var(--neu-shadow-light);
+  --neu-elevated: 16px 16px 32px var(--neu-shadow-dark), -16px -16px 32px var(--neu-shadow-light);
+  --neu-small: 4px 4px 8px var(--neu-shadow-dark), -4px -4px 8px var(--neu-shadow-light);
+  --neu-pressed: inset 6px 6px 12px var(--neu-shadow-dark), inset -6px -6px 12px var(--neu-shadow-light);
+  --neu-pressed-sm: inset 3px 3px 6px var(--neu-shadow-dark), inset -3px -3px 6px var(--neu-shadow-light);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --neu-bg: #2d3748;
+    --neu-shadow-dark: #1a202c;
+    --neu-shadow-light: #3d4a5c;
+    --neu-text: #e2e8f0;
+    --neu-heading: #f7fafc;
+    --neu-muted: #a0aec0;
+    --neu-success: #68d391;
+    --neu-warning: #f6e05e;
+    --neu-danger: #fc8181;
+    --neu-info: #90cdf4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --neu-bg: #2d3748;
+  --neu-shadow-dark: #1a202c;
+  --neu-shadow-light: #3d4a5c;
+  --neu-text: #e2e8f0;
+  --neu-heading: #f7fafc;
+  --neu-muted: #a0aec0;
+  --neu-success: #68d391;
+  --neu-warning: #f6e05e;
+  --neu-danger: #fc8181;
+  --neu-info: #90cdf4;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-surface: var(--neu-bg);
+  --color-ink: var(--neu-text);
+  --color-heading: var(--neu-heading);
+  --color-muted: var(--neu-muted);
+  --color-accent: var(--neu-accent);
+  --color-success: var(--neu-success);
+  --color-warning: var(--neu-warning);
+  --color-danger: var(--neu-danger);
+  --color-info: var(--neu-info);
+}
+
+html,
+body {
+  background: var(--neu-bg);
+  color: var(--neu-text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--neu-heading);
+  font-weight: 500;
+}
+
+@layer components {
+  .neu-card {
+    background: var(--neu-bg);
+    border-radius: 20px;
+    box-shadow: var(--neu-extruded);
+  }
+  .neu-inset {
+    background: var(--neu-bg);
+    border-radius: 12px;
+    box-shadow: var(--neu-pressed);
+  }
+  .neu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background: var(--neu-bg);
+    color: var(--neu-heading);
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: var(--neu-small);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .neu-btn:hover:not(:disabled) {
+    box-shadow: 6px 6px 12px var(--neu-shadow-dark), -6px -6px 12px var(--neu-shadow-light);
+    transform: translateY(-1px);
+  }
+  .neu-btn:active:not(:disabled) {
+    box-shadow: var(--neu-pressed-sm);
+    transform: translateY(0);
+  }
+  .neu-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .neu-btn-primary {
+    background: var(--neu-accent);
+    color: #fff;
+  }
+  .neu-btn-danger {
+    color: var(--neu-danger);
+  }
+  .neu-btn-sm {
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+  .neu-input {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--neu-bg);
+    color: var(--neu-heading);
+    box-shadow: var(--neu-pressed-sm);
+    outline: none;
+    font-size: 14px;
+  }
+  .neu-input::placeholder {
+    color: var(--neu-muted);
+  }
+  .neu-input:focus-visible,
+  .neu-btn:focus-visible,
+  .neu-nav:focus-visible {
+    box-shadow: var(--neu-pressed-sm), 0 0 0 3px rgba(102, 126, 234, 0.35);
+  }
+  .neu-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    color: var(--neu-text);
+    font-size: 14px;
+  }
+  .neu-nav:hover {
+    color: var(--neu-heading);
+  }
+  .neu-nav.active {
+    box-shadow: var(--neu-pressed-sm);
+    color: var(--neu-accent);
+    font-weight: 500;
+  }
+  .neu-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: var(--neu-pressed-sm);
+    white-space: nowrap;
+  }
+  .neu-table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .neu-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--neu-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 12px;
+  }
+  .neu-table td {
+    padding: 12px;
+    border-top: 1px solid color-mix(in srgb, var(--neu-shadow-dark) 60%, transparent);
+    vertical-align: middle;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .neu-btn,
+  .neu-nav,
+  .neu-input,
+  .neu-card {
+    transition:
+      box-shadow 250ms ease,
+      transform 250ms ease,
+      color 200ms ease;
+  }
+}

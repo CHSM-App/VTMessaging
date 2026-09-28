@@ -1,0 +1,27 @@
+# dependencies & builds
+node_modules/
+dist/
+backend/public/
+coverage/
+*.tsbuildinfo
+
+# environment (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# logs
+logs/
+iisnode-logs/
+*.log
+pm2*.json
+
+# Baileys session/auth directories
+storage/
+backend/storage/
+
+# temporary files
+*.tmp
+tmp/
+.DS_Store
+Thumbs.db

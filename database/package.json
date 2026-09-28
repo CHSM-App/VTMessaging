@@ -1,0 +1,15 @@
+{
+  "name": "vengurla-messaging-database",
+  "private": true,
+  "type": "module",
+  "description": "MSSQL migrations and seeds for the Vengurla WhatsApp Messaging Platform",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "migrate": "node scripts/migrate.ts",
+    "rollback": "node scripts/rollback.ts",
+    "seed": "node scripts/seed.ts"
+  },
+  "dependencies": {
+    "mssql": "^12.7.2"
+  }
+}

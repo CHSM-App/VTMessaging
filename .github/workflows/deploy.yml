@@ -1,0 +1,60 @@
+name: Build & Deploy
+
+# Builds the React frontend into backend/public/, compiles the backend, and syncs
+# the whole backend/ folder to the `backend` branch so that branch alone can be
+# deployed as-is (the backend serves the dashboard at its base URL).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  BACKEND_DIR: backend
+  BACKEND_BRANCH: backend
+
+jobs:
+  sync-backend:
+    name: Build frontend + sync backend branch
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/package-lock.json
+
+      - name: Install frontend deps
+        run: npm ci
+        working-directory: frontend
+
+      - name: Build frontend (outputs to backend/public/)
+        run: npm run build
+        working-directory: frontend
+
+      - name: Build backend (outputs to backend/dist/)
+        run: npm ci && npm run build
+        working-directory: backend
+
+      - name: Keep only backend production dependencies
+        run: npm prune --omit=dev
+        working-directory: backend
+
+      - name: Push backend folder to backend branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: ${{ env.BACKEND_BRANCH }}
+          publish_dir: ./${{ env.BACKEND_DIR }}
+          force_orphan: true
+          commit_message: "sync: backend + frontend build from ${{ github.ref_name }} @ ${{ github.sha }}"

@@ -1,0 +1,21 @@
+vmp_8ee57da29e7d.FBLWDNi2aUvc4ClQB6NlRIR4Pl6IEVEymyr3nuyERM4
+
+
+$apiKey = Read-Host "Paste your project API key"
+$body = @{
+  to = "918262878298"
+  type = "text"
+  text = @{ body = "Test message from Vengurla" }
+  idempotencyKey = [guid]::NewGuid().ToString()
+} | ConvertTo-Json -Depth 4
+
+$response = Invoke-RestMethod `
+  -Method Post `
+  -Uri "http://localhost:3000/api/v1/messages" `
+  -Headers @{ Authorization = "Bearer $apiKey" } `
+  -ContentType "application/json" `
+  -Body $body
+
+$response
+
+

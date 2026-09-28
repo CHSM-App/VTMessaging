@@ -1,0 +1,1 @@
+-- Production seeds: intentionally empty. Running `SEED_ENV=production npm run db:seed` only creates the first admin.
