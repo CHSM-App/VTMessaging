@@ -12,6 +12,7 @@ coverage/
 
 # logs
 logs/
+!frontend/src/pages/logs/
 iisnode-logs/
 *.log
 pm2*.json
